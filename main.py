@@ -174,7 +174,7 @@ def make_button_template():
 #pushメッセージ追加
 def main():
     messages = make_button_template()
-    line_bot_api.push_message(line_user_id, messages=messages)
+    line_bot_api.push_message(line_user_id, messages)
 
 
 # schedule.every().day.at("04:35").do(main)
