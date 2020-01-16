@@ -12,7 +12,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
+    MessageEvent, TextMessage, TextSendMessage, PostbackEvent
 )
 
 app = Flask(__name__)
@@ -48,10 +48,12 @@ def main():
     messages = TextSendMessage(text="こんにちは")
     line_bot_api.push_message(line_user_id, messages=messages)
 
-# schedule.every().day.at("23:06").do(main)
+schedule.every().day.at("01:35").do(main)
 main()
 
-
+while True:
+  schedule.run_pending()
+  time.sleep(60)
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
