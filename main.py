@@ -44,17 +44,17 @@ def callback():
 
     return 'OK'
 
-#pushメッセージ追加
-def main():
-    messages = make_button_template()
-    line_bot_api.push_message(line_user_id, messages=messages)
+# #pushメッセージ追加
+# def main():
+#     messages = make_button_template()
+#     line_bot_api.push_message(line_user_id, messages=messages)
 
-# schedule.every().day.at("01:35").do(main)
-main()
+# # schedule.every().day.at("04:35").do(main)
+# main()
 
-while True:
-  schedule.run_pending()
-  time.sleep(60)
+# while True:
+#   schedule.run_pending()
+#   time.sleep(60)
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -169,6 +169,18 @@ def make_button_template():
     )
     return message_template
 
+#pushメッセージ追加
+def main():
+    messages = make_button_template()
+    line_bot_api.push_message(line_user_id, messages=messages)
+
+
+# schedule.every().day.at("04:35").do(main)
+main()
+
+while True:
+  schedule.run_pending()
+  time.sleep(60)
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
