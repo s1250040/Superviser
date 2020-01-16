@@ -4,6 +4,7 @@ import os
 import datetime
 import schedule
 import time
+import random
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -12,7 +13,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, PostbackEvent
+    MessageEvent, TextMessage, TextSendMessage, TemplateSendMessage, MessageAction, ButtonsTemplate
 )
 
 app = Flask(__name__)
@@ -45,10 +46,10 @@ def callback():
 
 #pushメッセージ追加
 def main():
-    messages = TextSendMessage(text="こんにちは")
+    messages = make_button_template()
     line_bot_api.push_message(line_user_id, messages=messages)
 
-schedule.every().day.at("01:35").do(main)
+# schedule.every().day.at("01:35").do(main)
 main()
 
 while True:
@@ -57,11 +58,116 @@ while True:
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    # main()
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text)
+
+    if event.message.text == ANSWER:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text='正解です')
         )
+    else:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text='不正解です')
+        )
+
+#idを元に問題を選択
+def get_question(number):
+    dbname = 'question.db'
+    conn = sqlite3.connect(dbname)
+    c = conn.cursor()
+    select_sql = "select question from questioninfo where id like '%"+number+"%'"
+    c.execute(select_sql)
+    result = c.fetchone()
+    conn.close()
+    return result
+
+
+def get_choice1(number):
+    dbname = 'question.db'
+    conn = sqlite3.connect(dbname)
+    c = conn.cursor()
+    select_sql = "select one from questioninfo where id like '%"+number+"%'"
+    c.execute(select_sql)
+    result = c.fetchone()
+    conn.close()
+    return result
+
+
+def get_choice2(number):
+    dbname = 'question.db'
+    conn = sqlite3.connect(dbname)
+    c = conn.cursor()
+    select_sql = "select two from questioninfo where id like '%"+number+"%'"
+    c.execute(select_sql)
+    result = c.fetchone()
+    conn.close()
+    return result
+
+def get_choice3(number):
+    dbname = 'question.db'
+    conn = sqlite3.connect(dbname)
+    c = conn.cursor()
+    select_sql = "select three from questioninfo where id like '%"+number+"%'"
+    c.execute(select_sql)
+    result = c.fetchone()
+    conn.close()
+    return result
+
+def get_choice4(number):
+    dbname = 'question.db'
+    conn = sqlite3.connect(dbname)
+    c = conn.cursor()
+    select_sql = "select four from questioninfo where id like '%"+number+"%'"
+    c.execute(select_sql)
+    result = c.fetchone()
+    conn.close()
+    return result
+
+def get_answer(number):
+    dbname = 'question.db'
+    conn = sqlite3.connect(dbname)
+    c = conn.cursor()
+    select_sql = "select answer from questioninfo where id like '%"+number+"%'"
+    c.execute(select_sql)
+    result = c.fetchone()
+    conn.close()
+    return result
+
+
+def make_button_template():
+    global ANSWER
+    number = random.randint(1,3)
+    question = get_question(number)
+    choice1 = get_choice1(number)
+    choice2 = get_choice2(number)
+    choice3 = get_choice3(number)
+    choice4 = get_choice4(number)
+    ANSWER = get_answer(number)
+    message_template = TemplateSendMessage(
+        alt_text="問題",
+        template=ButtonsTemplate(
+            text=question,
+            actions=[
+                MessageAction(
+                    label=choice1,
+                    text="1"
+                ),
+                MessageAction(
+                    label=choice2,
+                    text="2"
+                ),
+                MessageAction(
+                    label=choice3,
+                    text="3"
+                ),
+                MessageAction(
+                    label=choice4,
+                    text="4"
+                ),
+            ]
+        )
+    )
+    return message_template
 
 
 if __name__ == "__main__":
