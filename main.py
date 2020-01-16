@@ -16,6 +16,8 @@ app = Flask(__name__)
 #環境変数取得
 YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
 YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
+#push用環境変数追加
+line_user_id = os.getenv('LINE_USER_ID', None)
 
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
@@ -37,12 +39,19 @@ def callback():
 
     return 'OK'
 
+#pushメッセージ追加
+def main():
+    messages = TextSendMessage(text="こんにちは")
+    line_bot_api.push_message(line_user_id, messages=messages)
+
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.text))
+        TextSendMessage(text=event.message.text)
+        main()
+        )
 
 
 if __name__ == "__main__":
