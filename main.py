@@ -5,6 +5,8 @@ import datetime
 import schedule
 import time
 import random
+import re
+import sqlite3
 
 from linebot import (
     LineBotApi, WebhookHandler
