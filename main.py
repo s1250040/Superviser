@@ -77,7 +77,7 @@ def get_question(number):
     dbname = 'question.db'
     conn = sqlite3.connect(dbname)
     c = conn.cursor()
-    select_sql = "select question from questioninfo where id like '%"+number+"%'"
+    select_sql = "select question from questioninfo where id == number"
     c.execute(select_sql)
     result = c.fetchone()
     conn.close()
@@ -88,7 +88,7 @@ def get_choice1(number):
     dbname = 'question.db'
     conn = sqlite3.connect(dbname)
     c = conn.cursor()
-    select_sql = "select one from questioninfo where id like '%"+number+"%'"
+    select_sql = "select one from questioninfo where id == number"
     c.execute(select_sql)
     result = c.fetchone()
     conn.close()
@@ -99,7 +99,7 @@ def get_choice2(number):
     dbname = 'question.db'
     conn = sqlite3.connect(dbname)
     c = conn.cursor()
-    select_sql = "select two from questioninfo where id like '%"+number+"%'"
+    select_sql = "select two from questioninfo where id == number"
     c.execute(select_sql)
     result = c.fetchone()
     conn.close()
@@ -109,7 +109,7 @@ def get_choice3(number):
     dbname = 'question.db'
     conn = sqlite3.connect(dbname)
     c = conn.cursor()
-    select_sql = "select three from questioninfo where id like '%"+number+"%'"
+    select_sql = "select three from questioninfo where id == number"
     c.execute(select_sql)
     result = c.fetchone()
     conn.close()
@@ -119,7 +119,7 @@ def get_choice4(number):
     dbname = 'question.db'
     conn = sqlite3.connect(dbname)
     c = conn.cursor()
-    select_sql = "select four from questioninfo where id like '%"+number+"%'"
+    select_sql = "select four from questioninfo where id == number"
     c.execute(select_sql)
     result = c.fetchone()
     conn.close()
@@ -129,7 +129,7 @@ def get_answer(number):
     dbname = 'question.db'
     conn = sqlite3.connect(dbname)
     c = conn.cursor()
-    select_sql = "select answer from questioninfo where id like '%"+number+"%'"
+    select_sql = "select answer from questioninfo where id == number"
     c.execute(select_sql)
     result = c.fetchone()
     conn.close()
