@@ -1,6 +1,10 @@
 from flask import Flask, request, abort
 import os
 
+import datetime
+import schedule
+import time
+
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -44,10 +48,16 @@ def main():
     messages = TextSendMessage(text="こんにちは")
     line_bot_api.push_message(line_user_id, messages=messages)
 
+schedule.every().day.at("23:04").do(main)
+
+while True:
+  schedule.run_pending()
+  time.sleep(60)
+
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    main()
+    # main()
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.text)
