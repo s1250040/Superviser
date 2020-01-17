@@ -61,8 +61,8 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-
-    if event.message.text == str(ANSWER):
+    global ANSWER
+    if event.message.text == ANSWER:
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text='正解です')
@@ -134,7 +134,7 @@ def get_answer(number):
     c.execute(select_sql)
     result = c.fetchone()
     conn.close()
-    return result[0]
+    return str(result[0])
 
 
 def make_button_template():
@@ -181,9 +181,9 @@ def main():
 # schedule.every().day.at("04:35").do(main)
 main()
 
-while True:
-  schedule.run_pending()
-  time.sleep(60)
+# while True:
+#   schedule.run_pending()
+#   time.sleep(60)
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
