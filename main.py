@@ -92,7 +92,7 @@ def get_choice1(number):
     c.execute(select_sql)
     result = c.fetchone()
     conn.close()
-    return result
+    return result[0]
 
 
 def get_choice2(number):
@@ -103,7 +103,7 @@ def get_choice2(number):
     c.execute(select_sql)
     result = c.fetchone()
     conn.close()
-    return result
+    return result[0]
 
 def get_choice3(number):
     dbname = 'question.db'
@@ -113,7 +113,7 @@ def get_choice3(number):
     c.execute(select_sql)
     result = c.fetchone()
     conn.close()
-    return result
+    return result[0]
 
 def get_choice4(number):
     dbname = 'question.db'
@@ -123,7 +123,7 @@ def get_choice4(number):
     c.execute(select_sql)
     result = c.fetchone()
     conn.close()
-    return result
+    return result[0]
 
 def get_answer(number):
     dbname = 'question.db'
@@ -133,7 +133,7 @@ def get_answer(number):
     c.execute(select_sql)
     result = c.fetchone()
     conn.close()
-    return result
+    return result[0]
 
 
 def make_button_template():
@@ -148,22 +148,22 @@ def make_button_template():
     message_template = TemplateSendMessage(
         alt_text="問題",
         template=ButtonsTemplate(
-            text="問題",
+            text=question,
             actions=[
                 MessageAction(
-                    label="1",
+                    label=choice1,
                     text="1"
                 ),
                 MessageAction(
-                    label="2",
+                    label=choice2,
                     text="2"
                 ),
                 MessageAction(
-                    label="3",
+                    label=choice3,
                     text="3"
                 ),
                 MessageAction(
-                    label="4",
+                    label=choice4,
                     text="4"
                 ),
             ]
