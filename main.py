@@ -148,7 +148,7 @@ def make_button_template():
     choice4 = get_choice4(number)
     ANSWER = get_answer(number)
     message_template = TemplateSendMessage(
-        alt_text="問題",
+        alt_text="問題！！",
         template=ButtonsTemplate(
             text=question,
             actions=[
