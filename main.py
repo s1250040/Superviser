@@ -81,7 +81,7 @@ def get_question(number):
     c.execute(select_sql)
     result = c.fetchone()
     conn.close()
-    return result
+    return result[0]
 
 
 def get_choice1(number):
