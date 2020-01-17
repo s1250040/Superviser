@@ -18,6 +18,7 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, TemplateSendMessage, MessageAction, ButtonsTemplate
 )
 
+ANSWER =''
 app = Flask(__name__)
 
 #環境変数取得
