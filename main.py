@@ -139,8 +139,7 @@ def get_answer(number):
 
 def make_button_template():
     global ANSWER
-    # number = random.randint(1,3)
-    number = 3
+    number = random.randint(1,3)
     question = get_question(number)
     choice1 = get_choice1(number)
     choice2 = get_choice2(number)
