@@ -148,22 +148,22 @@ def make_button_template():
     message_template = TemplateSendMessage(
         alt_text="問題",
         template=ButtonsTemplate(
-            text=question,
+            text="問題",
             actions=[
                 MessageAction(
-                    label=choice1,
+                    label="1",
                     text="1"
                 ),
                 MessageAction(
-                    label=choice2,
+                    label="2",
                     text="2"
                 ),
                 MessageAction(
-                    label=choice3,
+                    label="3",
                     text="3"
                 ),
                 MessageAction(
-                    label=choice4,
+                    label="4",
                     text="4"
                 ),
             ]
